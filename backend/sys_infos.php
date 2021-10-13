@@ -60,6 +60,12 @@ $mem = array_filter($mem);
 $mem = array_merge($mem);
 $free_version=trim(shell_exec("free --version")); // required trim(), to remove trailing whitespace
 //echo "<pre>".$free_version."</pre>";
+
+// UPS Percentage
+// $ups_percent = get_current_user();
+$ups_percent = shell_exec("sudo python3 /home/pi/UPS/GetBatteryPercentage.py 2>&1"); // Need to chmod home folder
+// Add "www-data ALL=NOPASSWD: /bin/python3" to /etc/sudoers
+
 if ($free_version == "free from procps-ng 3.3.9"){ // old free version Linux 8
   $memtotal = $mem[1];
   $memused = $mem[2];
@@ -130,6 +136,7 @@ if(isset($_GET["statemail"])){
   $msg .= "SWAP: ".$swapperc."%\n\n";
   $msg .= "SWAP overall: ".$swaptotal." MB\n\n";
   $msg .= "SWAP used: ".$swapused." MB\n\n";
+  $msg .= "UPS Battery: ".$ups_percent." \n\n";
 
   $command='python /var/www/html/'.$config->get("general.folder").'/statemail.py "Status Mail of RPi" "'.$msg.'"';
   //echo $command;
@@ -142,7 +149,7 @@ if(isset($_GET["statemail"])){
   echo $ausgabe;
 
 }else{
-  $output = array('auth' => 'true', 'timest' => $timed, 'uptime' => $uptime_string, 'cputemp' => $cputemp, 'cpufreq' => $cpufreq, 'load' => $getLoad, 'memperc' => $memperc, 'memavail' => $mavail, 'memunavail' => $munavail, 'swapperc' => $swapperc, 'swaptotal' => $swaptotal, 'swapused' => $swapused);
+  $output = array('auth' => 'true', 'timest' => $timed, 'uptime' => $uptime_string, 'cputemp' => $cputemp, 'cpufreq' => $cpufreq, 'load' => $getLoad, 'memperc' => $memperc, 'memavail' => $mavail, 'memunavail' => $munavail, 'swapperc' => $swapperc, 'swaptotal' => $swaptotal, 'swapused' => $swapused, 'ups_percent' => $ups_percent);
   echo json_encode($output);
 }
 

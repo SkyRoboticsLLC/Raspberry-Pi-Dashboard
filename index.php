@@ -261,6 +261,10 @@ if($auth){
           <p style="font-size: 20px" class="card-text text-muted"><?php echo $spannung; ?></p>
           <p class="card-text"><small class="text-muted">Updated <span><?php echo date("H:i:s");?> (at page load)</span></small></p>
         </div>
+        <div class="card-body">
+          <h5 class="card-title"><i class="bi bi-lightning"></i>&nbsp;UPS Percent</h5>
+          <p class="card-text"><span id="ups_percent"></span></p>
+        </div>
       </div>
     </div>
   </div>

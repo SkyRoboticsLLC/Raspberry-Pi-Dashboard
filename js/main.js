@@ -354,6 +354,9 @@ function updatedb(){
     }
     // Swap
     document.getElementById("swapsys").innerHTML="Swap: <b>"+result.swapperc+"</b> % ("+result.swapused+" MB of "+result.swaptotal+" MB)";
+    // UPS Percent
+    console.log("DEBUG:" + result.ups_percent);
+    document.getElementById("ups_percent").innerHTML=result.ups_percent;
     // Overall
     if (warn > 0){
       var s = (warn>1) ? "s" : "";
